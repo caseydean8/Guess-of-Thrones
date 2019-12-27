@@ -1,3 +1,21 @@
-body {
-  background: url(/assets/images/got-background.jpg);
+/* code from here to line 19: 
+https://www.w3schools.com/howto/howto_css_full_page.asp */
+
+body, html {
+  height: 100%;
 }
+
+.bg { 
+  /* The image used */
+  background-image: url(/assets/images/got-background.jpg);
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+

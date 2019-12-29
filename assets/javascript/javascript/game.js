@@ -1,33 +1,30 @@
 // Start with global variables
 
-const words = [
-  "daenerys targaryen",
-  "jon snow",
-  "tyrion lannister",
-  "bran stark",
-  "sansa stark",
-  "arya stark",
-  "cersei lannister",
-  "jaime lannister",
-  "khal drago",
-  "joffrey baratheon",
-  "theon greyjoy",
-  "samwell tarly",
-  "brienne of tarth",
-  "ramsay bolton",
-  "podrick payne",
-  "davos seaworth",
-  "jorah mormont",
-  "petyr Baelish"
-];
-
-// let answerArray = [];
-
 // Object
 
 // The properties of a const variable can change. That’s because the entire object is not immutable. It just can’t be reassigned entirely.
 
 var hangman = {
+  words: [
+    "daenerys targaryen",
+    "jon snow",
+    "tyrion lannister",
+    "bran stark",
+    "sansa stark",
+    "arya stark",
+    "cersei lannister",
+    "jaime lannister",
+    "khal drago",
+    "joffrey baratheon",
+    "theon greyjoy",
+    "samwell tarly",
+    "brienne of tarth",
+    "ramsay bolton",
+    "podrick payne",
+    "davos seaworth",
+    "jorah mormont",
+    "petyr Baelish"
+  ],
   wins: 0,
   answerArray: [],
   comparisonArray: [],
@@ -36,7 +33,7 @@ var hangman = {
   keyUsed: false,
   letterInword: false,
   startLogic: function() {
-    word = words[Math.floor(Math.random() * words.length)];
+    word = hangman.words[Math.floor(Math.random() * hangman.words.length)];
     console.log(word);
     for (var i = 0; i < word.length; i++) {
       hangman.answerArray[i] = "_";
@@ -47,45 +44,52 @@ var hangman = {
     }
     console.log(hangman.answerArray);
     console.log(hangman.comparisonArray);
+  },
+  gameReset: function() {
+    document.getElementById("current-word").innerHTML = word;
+    guesses = 10;
+    document.getElementById("guesses-left").innerHTML = guesses;
+    usedKeys = [];
+    comparisonArray = [];
+    document.getElementById("chosen-already").innerHTML = "";
+    document.onkeypress = function() {
+      startLogic();
+    };
   }
 };
 
 document.onkeypress = function(event) {
-  const userKey = event.key;
-
-  // keyUsed variable introduced to alert player if a key has been previously pressed
-  // let keyUsed = false;
-
-  // If the letter in the word generated is equal to the players keypress then set variable letterInWord to true.
-  // let letterInWord = false;
+  let userKey = event.key;  
 
   for (let j = 0; j < word.length; j++) {
     if (word[j] === userKey) {
-      letterInWord = true;
+      hangman.letterInWord = true;
     }
   }
 
   for (let i = 0; i < hangman.usedKeys.length; i++) {
     if (hangman.usedKeys[i] === userKey) {
-      keyUsed = true;
+      hangman.keyUsed = true;
     }
   }
 
   // If letterInWord is true, create letter in current-word . . .
-  if (letterInWord && hangman.keyUsed === false) {
+  if (hangman.letterInWord && hangman.keyUsed === false) {
     for (let j = 0; j < word.length; j++) {
       if (word[j] === userKey)
         // . . . at correct index
         hangman.answerArray[j] = userKey;
-      document.getElementById("current-word").innerHTML = hangman.answerArray.join(" ");
+      document.getElementById("current-word").innerHTML = hangman.answerArray.join("");
     }
     hangman.usedKeys.push(userKey);
-  } else if (letterInWord === false && keyUsed === false) {
+    console.log(hangman.usedKeys);
+  } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
     document.getElementById("already-guessed").innerHTML += `${userKey} `;
-    guesses--;
-    document.getElementById("guesses-left").innerHTML = guesses;
-    usedKeys.push(userKey);
+    hangman.guesses--;
+    document.getElementById("guesses-left").innerHTML = hangman.guesses;
+    hangman.usedKeys.push(userKey);
     document.getElementById("chosen-already").innerHTML = "Incorrect letters:";
+    console.log(hangman.usedKeys);
   } else {
     document.getElementById(
       "chosen-already"
@@ -94,18 +98,18 @@ document.onkeypress = function(event) {
 
   // Record win if player guesses correctly
   if (JSON.stringify(hangman.comparisonArray) === JSON.stringify(hangman.answerArray)) {
-    wins++;
-    document.getElementById("wins").innerHTML = wins;
+    hangman.wins++;
+    document.getElementById("wins").innerHTML = hangman.wins;
     document.getElementById("already-guessed").innerHTML =
       "Great Guess! Press any key to play again";
-    gameReset();
+    hangman.gameReset();
   }
 
   // Reset game upon loss.
   else if (hangman.guesses === 0) {
     document.getElementById("already-guessed").innerHTML =
       "You Lost, press a key to play again";
-    gameReset();
+    hangman.gameReset();
   }
 };
 

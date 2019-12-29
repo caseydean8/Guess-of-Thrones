@@ -19,3 +19,6 @@ body, html {
   color: white;
 }
 
+.game-info {
+  padding: 100px 50px;
+}

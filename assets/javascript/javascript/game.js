@@ -51,6 +51,7 @@ const hangman = {
     document.getElementById("current-word").innerHTML = this.word;
     this.guesses = 10;
     document.getElementById("guesses-left").innerHTML = this.guesses;
+    this.answerArray = [];
     this.usedKeys = [];
     this.comparisonArray = [];
     document.getElementById("chosen-already").innerHTML = "";
@@ -79,7 +80,7 @@ document.onkeypress = function(event) {
   for (let i = 0; i < hangman.word.length; i++) {
     if (hangman.word[i] === hangman.userKey) {
       hangman.letterInWord = true;
-      console.log(`letter in word? : ${hangman.letterInword}`);
+      console.log(`letter in word? : ${hangman.letterInWord}`);
       console.log(hangman.word[i]);
     }
   }

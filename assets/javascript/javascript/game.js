@@ -61,12 +61,13 @@ const hangman = {
   letterCheck: function() {
     for (let j = 0; j < this.word.length; j++) {
       if (this.word[j] === this.userKey) {
-        console.log(word[j]);
+        console.log(this.word[j]);
         this.letterInWord = true;
       }
     }
     console.log(`letter in word? : ${this.letterInWord}`);
-  }
+  },
+  
 };
 
 const keyReady = () => {
@@ -74,19 +75,18 @@ const keyReady = () => {
     hangman.userKey = event.key;
     hangman.letterInWord = false;
     hangman.keyUsed = false;
-    console.log(hangman.word);
-    console.log(hangman.userKey);
+    hangman.letterCheck();
+  }
+}
 
-    for (let i = 0; i < hangman.word.length; i++) {
-      if (hangman.word[i] === hangman.userKey) {
-        hangman.letterInWord = true;
-        console.log(`letter in word? : ${hangman.letterInWord}`);
-        console.log(hangman.word[i]);
-      }
-    }
+    // for (let i = 0; i < hangman.word.length; i++) {
+    //   if (hangman.word[i] === hangman.userKey) {
+    //     hangman.letterInWord = true;
+    //   }
+    // }
     // };
 
-    // function yourButt(){
+    function yourButt(){
     for (let i = 0; i < hangman.usedKeys.length; i++) {
       if (hangman.usedKeys[i] === hangman.userKey) {
         hangman.keyUsed = true;
@@ -96,7 +96,6 @@ const keyReady = () => {
 
     // If letterInWord is true, create letter in current-word . . .
     if (hangman.letterInWord === true && hangman.keyUsed === false) {
-      console.log(hangman.letterInword);
       for (let j = 0; j < hangman.word.length; j++) {
         if (hangman.word[j] === hangman.userKey)
           // . . . at correct index
@@ -122,9 +121,9 @@ const keyReady = () => {
       ).innerHTML = `You've chosen ${hangman.userKey} already`;
     }
 
-    console.log(hangman.usedKeys);
-    console.log(`letter ${hangman.userKey} in word? : ${hangman.letterInword}`);
-    console.log(`key ${hangman.userKey} used?: ${hangman.keyUsed}`);
+    // console.log(hangman.usedKeys);
+    // console.log(`letter ${hangman.userKey} in word? : ${hangman.letterInWord}`);
+    // console.log(`key ${hangman.userKey} used?: ${hangman.keyUsed}`);
 
     // Record win if player guesses correctly
     if (
@@ -145,6 +144,6 @@ const keyReady = () => {
       hangman.gameReset();
     }
   };
-};
+// };
 // Function calls
 // hangman.startLogic();

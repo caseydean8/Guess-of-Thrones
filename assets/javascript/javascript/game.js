@@ -65,9 +65,18 @@ const hangman = {
         this.letterInWord = true;
       }
     }
-    console.log(`letter in word? : ${this.letterInWord}`);
+    this.usedKeyCheck();
+    // console.log(`letter in word? : ${this.letterInWord}`);
   },
-  
+  usedKeyCheck: function() {
+    for (let i = 0; i < hangman.usedKeys.length; i++) {
+      if (hangman.usedKeys[i] === hangman.userKey) {
+        hangman.keyUsed = true;
+        console.log(`key used?: ${hangman.keyUsed}`);
+      }
+    }
+    yourButt();
+  }
 };
 
 const keyReady = () => {
@@ -76,74 +85,73 @@ const keyReady = () => {
     hangman.letterInWord = false;
     hangman.keyUsed = false;
     hangman.letterCheck();
+  };
+};
+
+// for (let i = 0; i < hangman.word.length; i++) {
+//   if (hangman.word[i] === hangman.userKey) {
+//     hangman.letterInWord = true;
+//   }
+// }
+// };
+
+function yourButt() {
+  // for (let i = 0; i < hangman.usedKeys.length; i++) {
+  //   if (hangman.usedKeys[i] === hangman.userKey) {
+  //     hangman.keyUsed = true;
+  //     console.log(`key used?: ${hangman.keyUsed}`);
+  //   }
+  // }
+
+  // If letterInWord is true, create letter in current-word . . .
+  if (hangman.letterInWord === true && hangman.keyUsed === false) {
+    for (let j = 0; j < hangman.word.length; j++) {
+      if (hangman.word[j] === hangman.userKey)
+        // . . . at correct index
+        hangman.answerArray[j] = hangman.userKey;
+      document.getElementById(
+        "current-word"
+      ).innerHTML = hangman.answerArray.join(" ");
+    }
+    hangman.usedKeys.push(hangman.userKey);
+  } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
+    document.getElementById(
+      "already-guessed"
+    ).innerHTML += `${hangman.userKey} `;
+    hangman.guesses--;
+    console.log(hangman.guesses);
+    document.getElementById("guesses-left").innerHTML = hangman.guesses;
+    hangman.usedKeys.push(hangman.userKey);
+    document.getElementById("chosen-already").innerHTML = "Incorrect letters:";
+  } else {
+    document.getElementById(
+      "chosen-already"
+    ).innerHTML = `You've chosen ${hangman.userKey} already`;
+  }
+
+  // console.log(hangman.usedKeys);
+  // console.log(`letter ${hangman.userKey} in word? : ${hangman.letterInWord}`);
+  // console.log(`key ${hangman.userKey} used?: ${hangman.keyUsed}`);
+
+  // Record win if player guesses correctly
+  if (
+    JSON.stringify(hangman.comparisonArray) ===
+    JSON.stringify(hangman.answerArray)
+  ) {
+    hangman.wins++;
+    document.getElementById("wins").innerHTML = hangman.wins;
+    document.getElementById("already-guessed").innerHTML =
+      "Great Guess! Press any key to play again";
+    hangman.gameReset();
+  }
+
+  // Reset game upon loss.
+  else if (hangman.guesses === 0) {
+    document.getElementById("already-guessed").innerHTML =
+      "You Lost, press a key to play again";
+    hangman.gameReset();
   }
 }
-
-    // for (let i = 0; i < hangman.word.length; i++) {
-    //   if (hangman.word[i] === hangman.userKey) {
-    //     hangman.letterInWord = true;
-    //   }
-    // }
-    // };
-
-    function yourButt(){
-    for (let i = 0; i < hangman.usedKeys.length; i++) {
-      if (hangman.usedKeys[i] === hangman.userKey) {
-        hangman.keyUsed = true;
-        console.log(`key used?: ${hangman.keyUsed}`);
-      }
-    }
-
-    // If letterInWord is true, create letter in current-word . . .
-    if (hangman.letterInWord === true && hangman.keyUsed === false) {
-      for (let j = 0; j < hangman.word.length; j++) {
-        if (hangman.word[j] === hangman.userKey)
-          // . . . at correct index
-          hangman.answerArray[j] = hangman.userKey;
-        document.getElementById(
-          "current-word"
-        ).innerHTML = hangman.answerArray.join(" ");
-      }
-      hangman.usedKeys.push(hangman.userKey);
-    } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
-      document.getElementById(
-        "already-guessed"
-      ).innerHTML += `${hangman.userKey} `;
-      hangman.guesses--;
-      console.log(hangman.guesses);
-      document.getElementById("guesses-left").innerHTML = hangman.guesses;
-      hangman.usedKeys.push(hangman.userKey);
-      document.getElementById("chosen-already").innerHTML =
-        "Incorrect letters:";
-    } else {
-      document.getElementById(
-        "chosen-already"
-      ).innerHTML = `You've chosen ${hangman.userKey} already`;
-    }
-
-    // console.log(hangman.usedKeys);
-    // console.log(`letter ${hangman.userKey} in word? : ${hangman.letterInWord}`);
-    // console.log(`key ${hangman.userKey} used?: ${hangman.keyUsed}`);
-
-    // Record win if player guesses correctly
-    if (
-      JSON.stringify(hangman.comparisonArray) ===
-      JSON.stringify(hangman.answerArray)
-    ) {
-      hangman.wins++;
-      document.getElementById("wins").innerHTML = hangman.wins;
-      document.getElementById("already-guessed").innerHTML =
-        "Great Guess! Press any key to play again";
-      hangman.gameReset();
-    }
-
-    // Reset game upon loss.
-    else if (hangman.guesses === 0) {
-      document.getElementById("already-guessed").innerHTML =
-        "You Lost, press a key to play again";
-      hangman.gameReset();
-    }
-  };
 // };
 // Function calls
 // hangman.startLogic();

@@ -23,6 +23,7 @@ const hangman = {
   answerArray: [],
   comparisonArray: [],
   usedKeys: [],
+  incorrect: [],
   guesses: 10,
   keyUsed: false,
   letterInWord: false,
@@ -69,6 +70,8 @@ const hangman = {
   },
 
   mainLogic: function() {
+    document.getElementById("start").innerHTML = "";
+    document.getElementById("guesses-left").innerHTML = `guesses left: ${this.guesses}`;
     if (hangman.letterInWord === true && hangman.keyUsed === false) {
       for (let j = 0; j < hangman.word.length; j++) {
         if (hangman.word[j] === hangman.userKey)
@@ -79,14 +82,13 @@ const hangman = {
       }
       hangman.usedKeys.push(hangman.userKey);
     } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
-      document.getElementById(
-        "already-guessed"
-      ).innerHTML += `${hangman.userKey} `;
+      // document.getElementById(
+      //   "already-guessed"
+      // ).innerHTML += `${hangman.userKey} `;
+      this.incorrect.push(this.userKey);
       hangman.guesses--;
-      document.getElementById("guesses-left").innerHTML = hangman.guesses;
       hangman.usedKeys.push(hangman.userKey);
-      document.getElementById("chosen-already").innerHTML =
-        "Incorrect letters:";
+      document.getElementById("chosen-already").innerHTML = `Incorrect letters: ${this.incorrect.join(" ")}`;
     } else {
       document.getElementById(
         "chosen-already"
@@ -102,7 +104,8 @@ const hangman = {
       JSON.stringify(hangman.answerArray)
     ) {
       hangman.wins++;
-      document.getElementById("wins").innerHTML = hangman.wins;
+      document.getElementById("wins").innerHTML = `Wins: ${this.wins}`;
+      document.getElementById("win-reveal").innerHTML = this.word;
       document.getElementById("already-guessed").innerHTML =
         "Great Guess! Press any key to play again";
       hangman.gameReset();
@@ -119,11 +122,18 @@ const hangman = {
     this.answerArray = [];
     this.usedKeys = [];
     this.comparisonArray = [];
-    document.getElementById("current-word").innerHTML = this.word;
-    document.getElementById("guesses-left").innerHTML = this.guesses;
-    document.getElementById("chosen-already").innerHTML = " ";
+    this.incorrect = [];
+    document.getElementById("current-word").innerHTML = "";
+    document.getElementById(
+      "guesses-left"
+    ).innerHTML = "";
+    document.getElementById("chosen-already").innerHTML = "";
     document.onkeypress = function() {
-      document.getElementById("already-guessed").innerHTML = " ";
+      document.getElementById("win-reveal").innerHTML = "";
+      document.getElementById(
+        "guesses-left"
+      ).innerHTML = `guesses left: ${hangman.guesses}`;
+      document.getElementById("already-guessed").innerHTML = "";
       hangman.startLogic();
     };
   }

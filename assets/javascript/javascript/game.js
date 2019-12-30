@@ -1,8 +1,3 @@
-// Start with global variables
-
-// Object
-
-// The properties of a const variable can change. That’s because the entire object is not immutable. It just can’t be reassigned entirely.
 
 const hangman = {
   words: [
@@ -54,15 +49,14 @@ const hangman = {
     document.getElementById("current-word").innerHTML = this.word;
     document.getElementById("guesses-left").innerHTML = this.guesses;
     document.getElementById("chosen-already").innerHTML = " ";
-    document.getElementById("already-guessed").innerHTML = " ";
     document.onkeypress = function() {
+      document.getElementById("already-guessed").innerHTML = " ";
       hangman.startLogic();
     };
   },
   letterCheck: function() {
     for (let j = 0; j < this.word.length; j++) {
       if (this.word[j] === this.userKey) {
-        console.log(this.word[j]);
         this.letterInWord = true;
       }
     }
@@ -72,7 +66,6 @@ const hangman = {
     for (let i = 0; i < hangman.usedKeys.length; i++) {
       if (hangman.usedKeys[i] === hangman.userKey) {
         hangman.keyUsed = true;
-        console.log(`key used?: ${hangman.keyUsed}`);
       }
     }
     this.mainLogic();
@@ -93,7 +86,6 @@ const hangman = {
         "already-guessed"
       ).innerHTML += `${hangman.userKey} `;
       hangman.guesses--;
-      console.log(hangman.guesses);
       document.getElementById("guesses-left").innerHTML = hangman.guesses;
       hangman.usedKeys.push(hangman.userKey);
       document.getElementById("chosen-already").innerHTML =
@@ -135,71 +127,3 @@ const keyReady = () => {
     hangman.letterCheck();
   };
 };
-
-// for (let i = 0; i < hangman.word.length; i++) {
-//   if (hangman.word[i] === hangman.userKey) {
-//     hangman.letterInWord = true;
-//   }
-// }
-// };
-
-function yourButt() {
-  // for (let i = 0; i < hangman.usedKeys.length; i++) {
-  //   if (hangman.usedKeys[i] === hangman.userKey) {
-  //     hangman.keyUsed = true;
-  //     console.log(`key used?: ${hangman.keyUsed}`);
-  //   }
-  // }
-
-  // If letterInWord is true, create letter in current-word . . .
-  // if (hangman.letterInWord === true && hangman.keyUsed === false) {
-  //   for (let j = 0; j < hangman.word.length; j++) {
-  //     if (hangman.word[j] === hangman.userKey)
-  //       // . . . at correct index
-  //       hangman.answerArray[j] = hangman.userKey;
-  //     document.getElementById(
-  //       "current-word"
-  //     ).innerHTML = hangman.answerArray.join(" ");
-  //   }
-  //   hangman.usedKeys.push(hangman.userKey);
-  // } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
-  //   document.getElementById(
-  //     "already-guessed"
-  //   ).innerHTML += `${hangman.userKey} `;
-  //   hangman.guesses--;
-  //   console.log(hangman.guesses);
-  //   document.getElementById("guesses-left").innerHTML = hangman.guesses;
-  //   hangman.usedKeys.push(hangman.userKey);
-  //   document.getElementById("chosen-already").innerHTML = "Incorrect letters:";
-  // } else {
-  //   document.getElementById(
-  //     "chosen-already"
-  //   ).innerHTML = `You've chosen ${hangman.userKey} already`;
-  // }
-
-  // console.log(hangman.usedKeys);
-  // console.log(`letter ${hangman.userKey} in word? : ${hangman.letterInWord}`);
-  // console.log(`key ${hangman.userKey} used?: ${hangman.keyUsed}`);
-
-  // Record win if player guesses correctly
-  // if (
-  //   JSON.stringify(hangman.comparisonArray) ===
-  //   JSON.stringify(hangman.answerArray)
-  // ) {
-  //   hangman.wins++;
-  //   document.getElementById("wins").innerHTML = hangman.wins;
-  //   document.getElementById("already-guessed").innerHTML =
-  //     "Great Guess! Press any key to play again";
-  //   hangman.gameReset();
-  // }
-
-  // // Reset game upon loss.
-  // else if (hangman.guesses === 0) {
-  //   document.getElementById("already-guessed").innerHTML =
-  //     "You Lost, press a key to play again";
-  //   hangman.gameReset();
-  // }
-}
-// };
-// Function calls
-// hangman.startLogic();

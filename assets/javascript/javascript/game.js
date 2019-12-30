@@ -1,4 +1,3 @@
-
 const hangman = {
   words: [
     "daenerys targaryen",
@@ -39,21 +38,18 @@ const hangman = {
         " "
       );
     }
-    keyReady();
+    this.keyReady();
   },
-  gameReset: function() {
-    this.guesses = 10;
-    this.answerArray = [];
-    this.usedKeys = [];
-    this.comparisonArray = [];
-    document.getElementById("current-word").innerHTML = this.word;
-    document.getElementById("guesses-left").innerHTML = this.guesses;
-    document.getElementById("chosen-already").innerHTML = " ";
-    document.onkeypress = function() {
-      document.getElementById("already-guessed").innerHTML = " ";
-      hangman.startLogic();
+
+  keyReady: function() {
+    document.onkeypress = function(event) {
+      hangman.userKey = event.key;
+      hangman.letterInWord = false;
+      hangman.keyUsed = false;
+      hangman.letterCheck();
     };
   },
+
   letterCheck: function() {
     for (let j = 0; j < this.word.length; j++) {
       if (this.word[j] === this.userKey) {
@@ -62,6 +58,7 @@ const hangman = {
     }
     this.usedKeyCheck();
   },
+
   usedKeyCheck: function() {
     for (let i = 0; i < hangman.usedKeys.length; i++) {
       if (hangman.usedKeys[i] === hangman.userKey) {
@@ -70,11 +67,11 @@ const hangman = {
     }
     this.mainLogic();
   },
+
   mainLogic: function() {
     if (hangman.letterInWord === true && hangman.keyUsed === false) {
       for (let j = 0; j < hangman.word.length; j++) {
         if (hangman.word[j] === hangman.userKey)
-          // . . . at correct index
           hangman.answerArray[j] = hangman.userKey;
         document.getElementById(
           "current-word"
@@ -97,6 +94,7 @@ const hangman = {
     }
     this.winLoss();
   },
+
   winLoss: function() {
     // Record win if player guesses correctly
     if (
@@ -109,21 +107,24 @@ const hangman = {
         "Great Guess! Press any key to play again";
       hangman.gameReset();
     }
-
     // Reset game upon loss.
     else if (hangman.guesses === 0) {
       document.getElementById("already-guessed").innerHTML =
         "You Lost, press a key to play again";
       hangman.gameReset();
     }
+  },
+  gameReset: function() {
+    this.guesses = 10;
+    this.answerArray = [];
+    this.usedKeys = [];
+    this.comparisonArray = [];
+    document.getElementById("current-word").innerHTML = this.word;
+    document.getElementById("guesses-left").innerHTML = this.guesses;
+    document.getElementById("chosen-already").innerHTML = " ";
+    document.onkeypress = function() {
+      document.getElementById("already-guessed").innerHTML = " ";
+      hangman.startLogic();
+    };
   }
-};
-
-const keyReady = () => {
-  document.onkeypress = function(event) {
-    hangman.userKey = event.key;
-    hangman.letterInWord = false;
-    hangman.keyUsed = false;
-    hangman.letterCheck();
-  };
 };

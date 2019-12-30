@@ -23,7 +23,7 @@ const hangman = {
     "podrick payne",
     "davos seaworth",
     "jorah mormont",
-    "petyr Baelish"
+    "petyr baelish"
   ],
   wins: 0,
   answerArray: [],
@@ -103,7 +103,27 @@ const hangman = {
         "chosen-already"
       ).innerHTML = `You've chosen ${hangman.userKey} already`;
     }
-    yourButt();
+    this.winLoss();
+  },
+  winLoss: function() {
+    // Record win if player guesses correctly
+    if (
+      JSON.stringify(hangman.comparisonArray) ===
+      JSON.stringify(hangman.answerArray)
+    ) {
+      hangman.wins++;
+      document.getElementById("wins").innerHTML = hangman.wins;
+      document.getElementById("already-guessed").innerHTML =
+        "Great Guess! Press any key to play again";
+      hangman.gameReset();
+    }
+
+    // Reset game upon loss.
+    else if (hangman.guesses === 0) {
+      document.getElementById("already-guessed").innerHTML =
+        "You Lost, press a key to play again";
+      hangman.gameReset();
+    }
   }
 };
 
@@ -162,23 +182,23 @@ function yourButt() {
   // console.log(`key ${hangman.userKey} used?: ${hangman.keyUsed}`);
 
   // Record win if player guesses correctly
-  if (
-    JSON.stringify(hangman.comparisonArray) ===
-    JSON.stringify(hangman.answerArray)
-  ) {
-    hangman.wins++;
-    document.getElementById("wins").innerHTML = hangman.wins;
-    document.getElementById("already-guessed").innerHTML =
-      "Great Guess! Press any key to play again";
-    hangman.gameReset();
-  }
+  // if (
+  //   JSON.stringify(hangman.comparisonArray) ===
+  //   JSON.stringify(hangman.answerArray)
+  // ) {
+  //   hangman.wins++;
+  //   document.getElementById("wins").innerHTML = hangman.wins;
+  //   document.getElementById("already-guessed").innerHTML =
+  //     "Great Guess! Press any key to play again";
+  //   hangman.gameReset();
+  // }
 
-  // Reset game upon loss.
-  else if (hangman.guesses === 0) {
-    document.getElementById("already-guessed").innerHTML =
-      "You Lost, press a key to play again";
-    hangman.gameReset();
-  }
+  // // Reset game upon loss.
+  // else if (hangman.guesses === 0) {
+  //   document.getElementById("already-guessed").innerHTML =
+  //     "You Lost, press a key to play again";
+  //   hangman.gameReset();
+  // }
 }
 // };
 // Function calls

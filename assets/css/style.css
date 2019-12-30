@@ -1,20 +1,17 @@
 /* code from here to line 19: 
 https://www.w3schools.com/howto/howto_css_full_page.asp */
 
-body, html {
+body,
+html {
   height: 100%;
 }
 
-body {
-  font-family: 'game_of_thronesregular', Fallback, sans-serif;
-}
-
-.bg { 
+.bg {
   /* The image used */
   background-image: url(/assets/images/got-background.jpg);
 
   /* Full height */
-  height: 100%; 
+  height: 100%;
 
   /* Center and scale the image nicely */
   background-position: center;
@@ -24,14 +21,10 @@ body {
 }
 
 .game-info {
+  font-family: "Raleway", sans-serif;
   padding: 230px 110px;
 }
 
-@font-face {
-  font-family: 'game_of_thronesregular';
-  src: url('/assets/fonts/game_of_thrones-webfont.woff') format('woff2'),
-       url('/assets/fonts/game_of_thrones-webfont.woff2') format('woff');
-  font-weight: normal;
-  font-style: normal;
-
+#win-reveal {
+  font-family: "Abril Fatface", cursive;
 }

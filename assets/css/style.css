@@ -5,6 +5,10 @@ body, html {
   height: 100%;
 }
 
+body {
+  font-family: 'game_of_thronesregular', Fallback, sans-serif;
+}
+
 .bg { 
   /* The image used */
   background-image: url(/assets/images/got-background.jpg);
@@ -20,5 +24,14 @@ body, html {
 }
 
 .game-info {
-  padding: 180px 110px;
+  padding: 230px 110px;
+}
+
+@font-face {
+  font-family: 'game_of_thronesregular';
+  src: url('/assets/fonts/game_of_thrones-webfont.woff') format('woff2'),
+       url('/assets/fonts/game_of_thrones-webfont.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }

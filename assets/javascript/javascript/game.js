@@ -52,6 +52,7 @@ const hangman = {
     this.usedKeys = [];
     this.comparisonArray = [];
     document.getElementById("current-word").innerHTML = this.word;
+    document.getElementById("guesses-left").innerHTML = this.guesses;
     document.getElementById("chosen-already").innerHTML = " ";
     document.getElementById("already-guessed").innerHTML = " ";
     document.onkeypress = function() {
@@ -66,7 +67,6 @@ const hangman = {
       }
     }
     this.usedKeyCheck();
-    // console.log(`letter in word? : ${this.letterInWord}`);
   },
   usedKeyCheck: function() {
     for (let i = 0; i < hangman.usedKeys.length; i++) {
@@ -74,6 +74,34 @@ const hangman = {
         hangman.keyUsed = true;
         console.log(`key used?: ${hangman.keyUsed}`);
       }
+    }
+    this.mainLogic();
+  },
+  mainLogic: function() {
+    if (hangman.letterInWord === true && hangman.keyUsed === false) {
+      for (let j = 0; j < hangman.word.length; j++) {
+        if (hangman.word[j] === hangman.userKey)
+          // . . . at correct index
+          hangman.answerArray[j] = hangman.userKey;
+        document.getElementById(
+          "current-word"
+        ).innerHTML = hangman.answerArray.join(" ");
+      }
+      hangman.usedKeys.push(hangman.userKey);
+    } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
+      document.getElementById(
+        "already-guessed"
+      ).innerHTML += `${hangman.userKey} `;
+      hangman.guesses--;
+      console.log(hangman.guesses);
+      document.getElementById("guesses-left").innerHTML = hangman.guesses;
+      hangman.usedKeys.push(hangman.userKey);
+      document.getElementById("chosen-already").innerHTML =
+        "Incorrect letters:";
+    } else {
+      document.getElementById(
+        "chosen-already"
+      ).innerHTML = `You've chosen ${hangman.userKey} already`;
     }
     yourButt();
   }
@@ -104,30 +132,30 @@ function yourButt() {
   // }
 
   // If letterInWord is true, create letter in current-word . . .
-  if (hangman.letterInWord === true && hangman.keyUsed === false) {
-    for (let j = 0; j < hangman.word.length; j++) {
-      if (hangman.word[j] === hangman.userKey)
-        // . . . at correct index
-        hangman.answerArray[j] = hangman.userKey;
-      document.getElementById(
-        "current-word"
-      ).innerHTML = hangman.answerArray.join(" ");
-    }
-    hangman.usedKeys.push(hangman.userKey);
-  } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
-    document.getElementById(
-      "already-guessed"
-    ).innerHTML += `${hangman.userKey} `;
-    hangman.guesses--;
-    console.log(hangman.guesses);
-    document.getElementById("guesses-left").innerHTML = hangman.guesses;
-    hangman.usedKeys.push(hangman.userKey);
-    document.getElementById("chosen-already").innerHTML = "Incorrect letters:";
-  } else {
-    document.getElementById(
-      "chosen-already"
-    ).innerHTML = `You've chosen ${hangman.userKey} already`;
-  }
+  // if (hangman.letterInWord === true && hangman.keyUsed === false) {
+  //   for (let j = 0; j < hangman.word.length; j++) {
+  //     if (hangman.word[j] === hangman.userKey)
+  //       // . . . at correct index
+  //       hangman.answerArray[j] = hangman.userKey;
+  //     document.getElementById(
+  //       "current-word"
+  //     ).innerHTML = hangman.answerArray.join(" ");
+  //   }
+  //   hangman.usedKeys.push(hangman.userKey);
+  // } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
+  //   document.getElementById(
+  //     "already-guessed"
+  //   ).innerHTML += `${hangman.userKey} `;
+  //   hangman.guesses--;
+  //   console.log(hangman.guesses);
+  //   document.getElementById("guesses-left").innerHTML = hangman.guesses;
+  //   hangman.usedKeys.push(hangman.userKey);
+  //   document.getElementById("chosen-already").innerHTML = "Incorrect letters:";
+  // } else {
+  //   document.getElementById(
+  //     "chosen-already"
+  //   ).innerHTML = `You've chosen ${hangman.userKey} already`;
+  // }
 
   // console.log(hangman.usedKeys);
   // console.log(`letter ${hangman.userKey} in word? : ${hangman.letterInWord}`);

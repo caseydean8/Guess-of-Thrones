@@ -136,3 +136,5 @@ const hangman = {
     };
   }
 };
+
+hangman.startLogic();

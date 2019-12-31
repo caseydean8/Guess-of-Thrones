@@ -1,4 +1,11 @@
-const hangman = {
+document.onkeypress = function(event) {
+  hangman.userKey = event.key;
+  hangman.letterInWord = false;
+  hangman.keyUsed = false;
+  hangman.letterCheck();
+};
+
+var hangman = {
   words: [
     "Daenerys Targaryen",
     "Jon Snow",
@@ -125,13 +132,6 @@ const hangman = {
       hangman.startLogic();
     };
   }
-};
-
-document.onkeypress = function(event) {
-  hangman.userKey = event.key;
-  hangman.letterInWord = false;
-  hangman.keyUsed = false;
-  hangman.letterCheck();
 };
 
 hangman.startLogic();

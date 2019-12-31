@@ -31,10 +31,9 @@ const hangman = {
   word: "",
   startLogic: function() {
     this.word = this.words[Math.floor(Math.random() * this.words.length)];
-    console.log(this.word);
     for (var i = 0; i < this.word.length; i++) {
       this.answerArray[i] = "_";
-      this.comparisonArray.push(this.word[i]);
+      this.comparisonArray.push(this.word[i].toLowerCase());
       document.getElementById("current-word").innerHTML = this.answerArray.join(
         " "
       );
@@ -52,8 +51,8 @@ const hangman = {
   },
 
   letterCheck: function() {
-    for (let j = 0; j < this.word.length; j++) {
-      if (this.word[j] === this.userKey) {
+    for (let j = 0; j < this.comparisonArray.length; j++) {
+      if (this.comparisonArray[j] === this.userKey) {
         this.letterInWord = true;
       }
     }
@@ -61,9 +60,9 @@ const hangman = {
   },
 
   usedKeyCheck: function() {
-    for (let i = 0; i < hangman.usedKeys.length; i++) {
-      if (hangman.usedKeys[i] === hangman.userKey) {
-        hangman.keyUsed = true;
+    for (let i = 0; i < this.usedKeys.length; i++) {
+      if (this.usedKeys[i] === this.userKey) {
+        this.keyUsed = true;
       }
     }
     this.mainLogic();
@@ -71,28 +70,29 @@ const hangman = {
 
   mainLogic: function() {
     document.getElementById("start").innerHTML = "";
-    document.getElementById("guesses-left").innerHTML = `guesses left: ${this.guesses}`;
-    if (hangman.letterInWord === true && hangman.keyUsed === false) {
-      for (let j = 0; j < hangman.word.length; j++) {
-        if (hangman.word[j] === hangman.userKey)
-          hangman.answerArray[j] = hangman.userKey;
+    document.getElementById(
+      "guesses-left"
+    ).innerHTML = `guesses left: ${this.guesses}`;
+    if (this.letterInWord === true && this.keyUsed === false) {
+      for (let j = 0; j < this.comparisonArray.length; j++) {
+        if (this.comparisonArray[j] === this.userKey)
+          this.answerArray[j] = this.userKey;
         document.getElementById(
           "current-word"
-        ).innerHTML = hangman.answerArray.join(" ");
+        ).innerHTML = this.answerArray.join(" ");
       }
-      hangman.usedKeys.push(hangman.userKey);
-    } else if (hangman.letterInWord === false && hangman.keyUsed === false) {
-      // document.getElementById(
-      //   "already-guessed"
-      // ).innerHTML += `${hangman.userKey} `;
+      this.usedKeys.push(this.userKey);
+    } else if (this.letterInWord === false && this.keyUsed === false) {
       this.incorrect.push(this.userKey);
-      hangman.guesses--;
-      hangman.usedKeys.push(hangman.userKey);
-      document.getElementById("chosen-already").innerHTML = `Incorrect letters: ${this.incorrect.join(" ")}`;
+      this.guesses--;
+      this.usedKeys.push(this.userKey);
+      document.getElementById(
+        "chosen-already"
+      ).innerHTML = `Incorrect letters: ${this.incorrect.join(" ")}`;
     } else {
       document.getElementById(
         "chosen-already"
-      ).innerHTML = `You've chosen ${hangman.userKey} already`;
+      ).innerHTML = `You've chosen ${this.userKey} already`;
     }
     this.winLoss();
   },
@@ -100,23 +100,23 @@ const hangman = {
   winLoss: function() {
     // Record win if player guesses correctly
     if (
-      JSON.stringify(hangman.comparisonArray) ===
-      JSON.stringify(hangman.answerArray)
+      JSON.stringify(this.comparisonArray) === JSON.stringify(this.answerArray)
     ) {
-      hangman.wins++;
+      this.wins++;
       document.getElementById("wins").innerHTML = `Wins: ${this.wins}`;
       document.getElementById("win-reveal").innerHTML = this.word;
       document.getElementById("already-guessed").innerHTML =
         "Great Guess! Press any key to play again";
-      hangman.gameReset();
+      this.gameReset();
     }
     // Reset game upon loss.
-    else if (hangman.guesses === 0) {
+    else if (this.guesses === 0) {
       document.getElementById("already-guessed").innerHTML =
         "You Lost, press a key to play again";
-      hangman.gameReset();
+      this.gameReset();
     }
   },
+
   gameReset: function() {
     this.guesses = 10;
     this.answerArray = [];
@@ -124,9 +124,7 @@ const hangman = {
     this.comparisonArray = [];
     this.incorrect = [];
     document.getElementById("current-word").innerHTML = "";
-    document.getElementById(
-      "guesses-left"
-    ).innerHTML = "";
+    document.getElementById("guesses-left").innerHTML = "";
     document.getElementById("chosen-already").innerHTML = "";
     document.onkeypress = function() {
       document.getElementById("win-reveal").innerHTML = "";

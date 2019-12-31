@@ -25,6 +25,7 @@ html {
   padding: 230px 110px;
 }
 
-#win-reveal {
-  font-family: "Abril Fatface", cursive;
+#win-reveal,
+#current-word {
+  font-family: "Cinzel Decorative", cursive;
 }

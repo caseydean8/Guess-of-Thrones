@@ -38,16 +38,6 @@ const hangman = {
         " "
       );
     }
-    this.keyReady();
-  },
-
-  keyReady: function() {
-    document.onkeypress = function(event) {
-      hangman.userKey = event.key;
-      hangman.letterInWord = false;
-      hangman.keyUsed = false;
-      hangman.letterCheck();
-    };
   },
 
   letterCheck: function() {
@@ -135,6 +125,13 @@ const hangman = {
       hangman.startLogic();
     };
   }
+};
+
+document.onkeypress = function(event) {
+  hangman.userKey = event.key;
+  hangman.letterInWord = false;
+  hangman.keyUsed = false;
+  hangman.letterCheck();
 };
 
 hangman.startLogic();

@@ -1,10 +1,3 @@
-document.onkeypress = function(event) {
-  hangman.userKey = event.key;
-  hangman.letterInWord = false;
-  hangman.keyUsed = false;
-  hangman.letterCheck();
-};
-
 var hangman = {
   words: [
     "Daenerys Targaryen",
@@ -45,6 +38,16 @@ var hangman = {
         " "
       );
     }
+    this.keyReady();
+  },
+
+  keyReady: function() {
+    document.onkeypress = function(event) {
+      hangman.userKey = event.key;
+      hangman.letterInWord = false;
+      hangman.keyUsed = false;
+      hangman.letterCheck();
+    };
   },
 
   letterCheck: function() {

@@ -1,12 +1,8 @@
-# hangManTwo
+# Guess of Thrones
 
-Object based word guess game written in vanilla javascript
+Guess of Thrones in Javascript hangman style game using object oriented programming where the user tries to guess the name of a Game of thrones character.
 
-1. Organize your game code as an object, except for the key events to get the letter guessed.
+The game can be played here:
+https://caseydean8.github.io/hangManTwo/
 
-2. Save your whole game and its properties in an object.
-
-3.  Save any of your game's functions as methods, and call them underneath your object declaration using event listeners.
-
-4. Don't forget to place your global variables and functions above your object.
-   * Remember: global variables, then objects, then calls.
+Any questions or comments can be directed to caseydean8@gmail.com
